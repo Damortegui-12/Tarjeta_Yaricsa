@@ -9,4 +9,4 @@ Tarjeta digital interactiva de Yaricsa Spa Holístico (Yaricsa Academy), Zapopan
 
 `index.html` es la tarjeta completa en un solo archivo (imágenes incluidas).
 
-La tarjeta se edita en Muse y se vuelve a exportar aquí; este repositorio es el respaldo y la fuente para el despliegue en Vercel.
+
