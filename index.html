@@ -330,6 +330,44 @@
         box-shadow:0 14px 30px rgba(0,0,0,.45);transition:opacity .25s,transform .25s;white-space:nowrap;
       }
       .toast.show{opacity:1;transform:translate(-50%,0)}
+
+      /* ---------- Hover de botones (solo puntero fino) ---------- */
+      .pill-nav button,.pill-nav a,.feat,.back-btn,.add-btn,.course a,
+      .contact-actions a,.contact-actions button,.qty button,.checkout,
+      .clear-btn,.empty-actions button,.bottom-bar a,.bottom-bar button,
+      .chat-fab,.chip{transition:background-color .2s ease,border-color .2s ease,box-shadow .2s ease,transform .2s ease,color .2s ease}
+      .feat img{transition:transform .45s ease}
+      button:focus-visible,a:focus-visible{outline:2px solid var(--gold-2);outline-offset:2px}
+      @media (hover:hover) and (pointer:fine){
+        .pill-nav button:hover,.pill-nav a:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(0,0,0,.3)}
+        .feat:hover{border-color:var(--gold);box-shadow:0 14px 30px rgba(0,0,0,.4)}
+        .feat:hover img{transform:scale(1.05)}
+        .back-btn:hover{background:rgba(10,74,63,.9);border-color:var(--gold);color:#fdf6e3}
+        .add-btn:hover{background:var(--green-2);border-color:var(--gold-2);transform:translateY(-1px);box-shadow:0 8px 16px rgba(6,56,49,.35)}
+        .course a:hover{background:var(--green-2);border-color:var(--gold-2);transform:translateY(-1px);box-shadow:0 8px 16px rgba(6,56,49,.35)}
+        .body-cream .course a:hover{background:var(--terra-dark);border-color:var(--terra-dark)}
+        .contact-actions a:hover,.contact-actions button:hover{background:var(--gold-soft);border-color:var(--gold);transform:translateY(-1px)}
+        .body-cream .contact-actions a:hover,.body-cream .contact-actions button:hover{background:#fff;border-color:var(--terra);box-shadow:0 10px 22px rgba(90,60,20,.2)}
+        .qty button:hover{background:#e9dfc2;border-color:var(--gold);color:var(--green)}
+        .checkout:hover{background:#1eb85a;transform:translateY(-1px);box-shadow:0 10px 22px rgba(6,40,26,.3)}
+        .checkout:disabled:hover{background:#25d366;transform:none;box-shadow:none}
+        .clear-btn:hover{border-color:var(--gold);color:#fdf6e3}
+        .body-cream .clear-btn:hover{border-color:var(--terra);color:var(--terra-dark)}
+        .empty-actions button:hover{background:var(--green-2);border-color:var(--gold-2);transform:translateY(-1px);box-shadow:0 8px 16px rgba(6,56,49,.35)}
+        .bottom-bar a:hover,.bottom-bar button:hover{background:var(--gold-soft);color:#fdf6e3}
+        .chat-fab:hover{background:var(--green-2);border-color:var(--gold-2);transform:translateY(-2px);box-shadow:0 18px 36px rgba(0,0,0,.5)}
+        .chat-close:hover{color:#fdf6e3}
+        .chip:hover{background:var(--gold-soft);border-color:var(--gold);transform:translateY(-1px)}
+      }
+      @media (prefers-reduced-motion: reduce){
+        .pill-nav button,.pill-nav a,.feat,.feat img,.back-btn,.add-btn,.course a,
+        .contact-actions a,.contact-actions button,.qty button,.checkout,
+        .clear-btn,.empty-actions button,.bottom-bar a,.bottom-bar button,
+        .chat-fab,.chip{transition:none}
+        .feat:hover img,.add-btn:hover,.course a:hover,.contact-actions a:hover,
+        .contact-actions button:hover,.checkout:hover,.empty-actions button:hover,
+        .chat-fab:hover,.chip:hover,.pill-nav button:hover,.pill-nav a:hover{transform:none}
+      }
     </style>
   </head>
   <body>
