@@ -2966,7 +2966,7 @@ var qrcode = function() {
         var badge = it.isNew ? ' <span class="badge-new">New</span>' : '';
         var price = it.price
           ? '<div><div class="price">' + money(it.price) + '</div></div>'
-          : '<div><div class="price tbd">Precio a confirmar</div></div>';
+          : '<div></div>';
         return '<div class="item"><div class="grow"><h3>' + it.name + badge + '</h3>' +
           '<p class="desc">' + it.desc + '</p></div>' +
           price +
@@ -3047,17 +3047,14 @@ var qrcode = function() {
         foot.style.display = "block";
         list.innerHTML = ids.map(function(id){
           var it = ALL[id];
-          var unit = it.price ? money(it.price) + " c/u" : "Precio a confirmar por WhatsApp";
+          var unit = it.price ? '<div class="unit">' + money(it.price) + " c/u</div>" : "";
           return '<div class="cart-item"><div class="grow"><h4>' + it.name + '</h4>' +
-            '<div class="unit">' + unit + '</div></div>' +
+            unit + '</div>' +
             '<div class="qty"><button data-dec="' + id + '" aria-label="Quitar uno">−</button><b>' + cart[id] + '</b>' +
             '<button data-inc="' + id + '" aria-label="Agregar uno">+</button></div></div>';
         }).join("");
         document.getElementById("cartTotal").textContent = money(cartTotal());
-        var hasNoPrice = ids.some(function(id){ return !ALL[id].price; });
-        document.getElementById("cartNote").textContent = hasNoPrice
-          ? "El total no incluye los artículos sin precio publicado: su precio se confirma por WhatsApp."
-          : "";
+        document.getElementById("cartNote").textContent = "";
         updateCheckout();
       }
       document.getElementById("cartList").addEventListener("click", function(e){
@@ -3081,14 +3078,11 @@ var qrcode = function() {
         Object.keys(cart).forEach(function(id){
           var it = ALL[id];
           var line = "• " + it.name + " × " + cart[id];
-          line += it.price ? " — " + money(it.price * cart[id]) : " — precio a confirmar";
+          if (it.price) line += " — " + money(it.price * cart[id]);
           lines.push(line);
         });
         lines.push("");
         lines.push("Total: " + money(cartTotal()));
-        if (Object.keys(cart).some(function(id){ return !ALL[id].price; })) {
-          lines.push("(El total no incluye los artículos sin precio publicado; precio a confirmar.)");
-        }
         lines.push("Preferencia: " + pref);
         if (name) lines.push("Nombre: " + name);
         window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(lines.join("\n")), "_blank");
