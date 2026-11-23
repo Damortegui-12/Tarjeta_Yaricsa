@@ -173,6 +173,13 @@
         border-radius:999px;padding:9px 15px;font-size:.85rem;font-weight:500;
       }
       .add-btn:active{background:var(--green-2)}
+      .badge-new{
+        display:inline-block;vertical-align:.28em;margin-left:8px;
+        background:var(--gold);color:var(--green-deep);
+        font-family:var(--sans);font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+        padding:3px 9px;border-radius:999px;white-space:nowrap;
+      }
+      .item .price.tbd{font-size:.82rem;font-weight:500;color:var(--muted);white-space:normal;text-align:right;max-width:92px;line-height:1.3}
       .pkg{border:1px solid var(--gold);background:linear-gradient(160deg,#0a4a3f,#063831);border-radius:var(--radius);padding:18px;margin-bottom:14px}
       .pkg h3{font-family:var(--serif);font-size:1.5rem;margin:0 0 4px;color:var(--gold-2);font-weight:600}
       .pkg p{margin:0;font-weight:300;line-height:1.55;color:#e9e2cf}
@@ -2927,6 +2934,7 @@ var qrcode = function() {
       ];
 
       var TIENDA = [
+        { id:"t-velas", name:"Velas Intencionadas", desc:"Kit de Limpieza Energética.", price:null, isNew:true },
         { id:"t-gel-hielo", name:"Gel hieloterapia", desc:"Presentación de 250 ml.", price:250 },
         { id:"t-gel-cafe", name:"Gel cafeterapia", desc:"Presentación de 250 ml.", price:250 },
         { id:"t-gel-reductivo", name:"Gel reductivo", desc:"Presentación de 250 ml.", price:250 },
@@ -2955,9 +2963,13 @@ var qrcode = function() {
       function money(n){ return "$" + n.toLocaleString("es-MX") + " MXN"; }
 
       function itemHTML(it){
-        return '<div class="item"><div class="grow"><h3>' + it.name + '</h3>' +
+        var badge = it.isNew ? ' <span class="badge-new">New</span>' : '';
+        var price = it.price
+          ? '<div><div class="price">' + money(it.price) + '</div></div>'
+          : '<div><div class="price tbd">Precio a confirmar</div></div>';
+        return '<div class="item"><div class="grow"><h3>' + it.name + badge + '</h3>' +
           '<p class="desc">' + it.desc + '</p></div>' +
-          '<div><div class="price">' + money(it.price) + '</div></div>' +
+          price +
           '<button class="add-btn" data-add="' + it.id + '">Agregar</button></div>';
       }
       function pkgHTML(it){
@@ -3042,9 +3054,9 @@ var qrcode = function() {
             '<button data-inc="' + id + '" aria-label="Agregar uno">+</button></div></div>';
         }).join("");
         document.getElementById("cartTotal").textContent = money(cartTotal());
-        var hasPkg = ids.some(function(id){ return !ALL[id].price; });
-        document.getElementById("cartNote").textContent = hasPkg
-          ? "El total no incluye los paquetes: su precio se confirma por WhatsApp."
+        var hasNoPrice = ids.some(function(id){ return !ALL[id].price; });
+        document.getElementById("cartNote").textContent = hasNoPrice
+          ? "El total no incluye los artículos sin precio publicado: su precio se confirma por WhatsApp."
           : "";
         updateCheckout();
       }
@@ -3075,7 +3087,7 @@ var qrcode = function() {
         lines.push("");
         lines.push("Total: " + money(cartTotal()));
         if (Object.keys(cart).some(function(id){ return !ALL[id].price; })) {
-          lines.push("(El total no incluye los paquetes; precio a confirmar.)");
+          lines.push("(El total no incluye los artículos sin precio publicado; precio a confirmar.)");
         }
         lines.push("Preferencia: " + pref);
         if (name) lines.push("Nombre: " + name);
